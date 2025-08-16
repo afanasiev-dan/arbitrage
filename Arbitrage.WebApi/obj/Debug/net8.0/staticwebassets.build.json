@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "gxviD1JGN2NYseBgyARD+/mxPSGlJJrtnAJgTFPk2PA=",
+  "Source": "Arbitrage.WebApi",
+  "BasePath": "_content/Arbitrage.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

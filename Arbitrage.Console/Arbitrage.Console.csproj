@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Arbitrage.Test</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Arbitrage.Exchange\Arbitrage.Exchange.csproj" />
+    <ProjectReference Include="..\Arbitrage.Graph\Arbitrage.Graph.csproj" />
+    <ProjectReference Include="..\Arbitrage.Symbols\Arbitrage.Symbols.csproj" />
+    <ProjectReference Include="..\Arbitrage.WebApi\Arbitrage.WebApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.0-preview.6.25358.103">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0-preview.6.25358.103" />
+  </ItemGroup>
+
+</Project>
