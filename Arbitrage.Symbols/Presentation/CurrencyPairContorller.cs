@@ -34,18 +34,13 @@ namespace Arbitrage.Symbols.Presentation
             if (result == null || !result.Any())
                 return NotFound(new ApiResponce() { RetMsg = "Пара не найдена" });
 
-            var uniquePairsByBaseTicker = result
-                    .GroupBy(cp => cp.BaseCoin.Name)
-                    .Select(g => g.First())
-                    .ToList();
-
-            var responce = uniquePairsByBaseTicker.Select(cp =>
+            var responce = result.Select(cp =>
             {
                 var responce = new CurrencyPairResponceDto()
                 {
-                    ExchangeNameLong = cp.Exchange.Name,
-                    SymbolNameLong = cp.BaseCoin.Name,
-                    SymbolNameShort = cp.QuoteCoin.Name,
+                    ExchangeName = cp.Exchange.Name,
+                    BaseCoin = cp.BaseCoin.Name,
+                    QuoteCoin = cp.QuoteCoin.Name,
                     MarketType = cp.MarketType
                 };
 
