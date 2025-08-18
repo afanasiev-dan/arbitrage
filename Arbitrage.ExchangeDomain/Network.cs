@@ -13,6 +13,14 @@ namespace Arbitrage.ExchangeDomain
             HttpResponseMessage response = await httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsStringAsync();
-        }        
+        }
+
+        public static async Task<string> PostAsync(string url)
+        {
+            using HttpClient httpClient = new HttpClient();
+            HttpResponseMessage response = await httpClient.PostAsync(url, null);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsStringAsync();
+        }
     }
 }
