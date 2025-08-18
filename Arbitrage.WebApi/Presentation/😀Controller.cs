@@ -10,7 +10,7 @@ namespace Arbitrage.WebApi.Presentation
     {
         private readonly ILogger<AhahahaController> _logger = logger;
 
-        [HttpPost("proxy")]
+        [HttpPost("proxy-huyoksi")]
         public async Task<IActionResult> Proxy([FromQuery] string url)
         {
             if (string.IsNullOrEmpty(url))

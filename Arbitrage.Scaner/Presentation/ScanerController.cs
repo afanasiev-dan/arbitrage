@@ -1,6 +1,5 @@
 using Arbitrage.Domain;
 using Arbitrage.Scaner.Application.Contracts;
-using Arbitrage.Scaner.Domain.Entities;
 using Arbitrage.Scaner.Presentation.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

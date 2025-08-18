@@ -53,22 +53,5 @@ namespace Arbitrage.Symbols.Presentation
             return Ok(new ApiResponce() { Result = responce });
         }
 
-        [HttpPost("proxy")]
-        public async Task<IActionResult> Proxy([FromQuery] string url)
-        {
-            if (string.IsNullOrEmpty(url))
-                return BadRequest(new ApiResponce() { RetMsg = "Не указан URL" });
-
-            try
-            {
-                var response = await Network.PostAsync(url);
-                return Content(response, "application/json");
-            }
-            catch (HttpRequestException ex)
-            {
-                _logger.LogError(ex, "Ошибка при проксировании запроса");
-                return StatusCode(StatusCodes.Status500InternalServerError, new ApiResponce() { RetMsg = "Ошибка при проксировании запроса" });
-            }
-        }
     }
 }
