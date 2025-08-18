@@ -38,6 +38,7 @@ namespace Arbitrage.Symbols.Presentation
             {
                 var responce = new CurrencyPairResponceDto()
                 {
+                    Ticker = cp.Pair,
                     ExchangeName = cp.Exchange.Name,
                     BaseCoin = cp.BaseCoin.Name,
                     QuoteCoin = cp.QuoteCoin.Name,

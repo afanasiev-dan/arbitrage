@@ -24,5 +24,7 @@ namespace Arbitrage.Symbols.Presentation.Dto.CurrencyPair
         public string? QuoteCoin { get; set; } = "USDT";
 
         public MarketType MarketType { get; set; }
+
+        public string Ticker { get; set; }
     }
 }
