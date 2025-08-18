@@ -15,7 +15,7 @@ namespace Arbitrage.WebApi.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.7");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
 
             modelBuilder.Entity("Arbitrage.Exchange.Domain.Entities.ExchangeModel", b =>
                 {
@@ -76,6 +76,55 @@ namespace Arbitrage.WebApi.Migrations
                     b.HasIndex("ExchangeId");
 
                     b.ToTable("Candles");
+                });
+
+            modelBuilder.Entity("Arbitrage.Scaner.Domain.Entities.ScanerModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("BaseCoinId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ExchangeIdLong")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ExchangeIdShort")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("FundingRateLong")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("FundingRateShort")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("MarketTypeLong")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MarketTypeShort")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("PurchasePriceLong")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("PurchasePriceShort")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("QuoteCoinId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BaseCoinId");
+
+                    b.HasIndex("ExchangeIdLong");
+
+                    b.HasIndex("ExchangeIdShort");
+
+                    b.HasIndex("QuoteCoinId");
+
+                    b.ToTable("ScanerData");
                 });
 
             modelBuilder.Entity("Arbitrage.Symbols.Domain.Entities.Coin", b =>
@@ -146,6 +195,41 @@ namespace Arbitrage.WebApi.Migrations
                     b.Navigation("Exchange");
 
                     b.Navigation("Pair");
+                });
+
+            modelBuilder.Entity("Arbitrage.Scaner.Domain.Entities.ScanerModel", b =>
+                {
+                    b.HasOne("Arbitrage.Symbols.Domain.Entities.Coin", "BaseCoin")
+                        .WithMany()
+                        .HasForeignKey("BaseCoinId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Arbitrage.Exchange.Domain.Entities.ExchangeModel", "ExchangeLong")
+                        .WithMany()
+                        .HasForeignKey("ExchangeIdLong")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Arbitrage.Exchange.Domain.Entities.ExchangeModel", "ExchangeShort")
+                        .WithMany()
+                        .HasForeignKey("ExchangeIdShort")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Arbitrage.Symbols.Domain.Entities.Coin", "QuoteCoin")
+                        .WithMany()
+                        .HasForeignKey("QuoteCoinId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BaseCoin");
+
+                    b.Navigation("ExchangeLong");
+
+                    b.Navigation("ExchangeShort");
+
+                    b.Navigation("QuoteCoin");
                 });
 
             modelBuilder.Entity("Arbitrage.Symbols.Domain.Entities.CurrencyPair", b =>

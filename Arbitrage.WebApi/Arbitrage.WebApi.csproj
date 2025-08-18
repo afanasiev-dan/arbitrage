@@ -23,6 +23,8 @@
     <ItemGroup>
       <ProjectReference Include="..\Arbitrage.Graph\Arbitrage.Graph.csproj" />
       <ProjectReference Include="..\Arbitrage.Symbols\Arbitrage.Symbols.csproj" />
+      <ProjectReference Include="..\Arbitrage.Domain\Arbitrage.Domain.csproj" />
+      <ProjectReference Include="..\Arbitrage.Scaner\Arbitrage.Scaner.csproj" />
     </ItemGroup>
 
 </Project>

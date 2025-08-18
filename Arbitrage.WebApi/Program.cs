@@ -1,5 +1,6 @@
 using Arbitrage.Exchange;
 using Arbitrage.Graph;
+using Arbitrage.Scaner;
 using Arbitrage.Symbols;
 using Arbitrage.WebApi.Infastructure;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,7 @@ builder.Services.AddDbContext<DbContext, AppDbContext>(options =>
 builder.Services.AddExchangeModule();
 builder.Services.AddSymbolsModule();
 builder.Services.AddGraphModule();
+builder.Services.AddScanerModule();
 
 var app = builder.Build();
 

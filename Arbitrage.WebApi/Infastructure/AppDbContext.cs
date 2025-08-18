@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Arbitrage.Graph.Domain;
 using Arbitrage.Symbols.Domain.Entities;
 using Arbitrage.Exchange.Domain.Entities;
+using Arbitrage.Scaner.Domain.Entities;
 
 namespace Arbitrage.WebApi.Infastructure;
 
@@ -12,8 +13,8 @@ public class AppDbContext : DbContext
     public DbSet<Candle> Candles { get; set; }
     public DbSet<Coin> Coins { get; set; }
     public DbSet<CurrencyPair> CurrencyPairs { get; set; }
-    // public DbSet<ExchangeFormat> ExchangeFormats { get; set; }
     public DbSet<ExchangeModel> Exchanges { get; set; }
+    public DbSet<ScanerModel> ScanerData { get; set; }
 
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
@@ -34,6 +35,25 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(e => e.CurrencyPairId);
 
+        modelBuilder.Entity<ScanerModel>()
+            .HasOne(e => e.BaseCoin)
+            .WithMany()
+            .HasForeignKey(s => s.BaseCoinId);
+
+        modelBuilder.Entity<ScanerModel>()
+            .HasOne(e => e.QuoteCoin)
+            .WithMany()
+            .HasForeignKey(s => s.QuoteCoinId);
+
+        modelBuilder.Entity<ScanerModel>()
+            .HasOne(e => e.ExchangeLong)
+            .WithMany()
+            .HasForeignKey(s => s.ExchangeIdLong);
+
+        modelBuilder.Entity<ScanerModel>()
+            .HasOne(e => e.ExchangeShort)
+            .WithMany()
+            .HasForeignKey(s => s.ExchangeIdShort);
         // modelBuilder.Entity<CurrencyPair>()
         //     .HasOne(cp => cp.BaseCoin)
         //     .WithMany()
