@@ -17,7 +17,7 @@ public static class Setup
     public static IServiceCollection AddGraphModule(
         this IServiceCollection services)
     {
-        services.AddScoped<ICandleRepository, CandleRepository>();
+        services.AddTransient<ICandleRepository, CandleRepository>();
         services.AddScoped<CandleService>();
 
         services.AddScoped<IExchangeApiClient, MexcApiClient>();

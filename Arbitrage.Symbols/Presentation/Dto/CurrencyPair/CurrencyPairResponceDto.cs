@@ -11,17 +11,17 @@ namespace Arbitrage.Symbols.Presentation.Dto.CurrencyPair
         /// <summary>
         /// Название биржи лонга
         /// </summary>
-        public string ExchangeNameLong { get; set; }
+        public string ExchangeName { get; set; }
 
         /// <summary>
         /// Название монеты лонга 
         /// </summary>
-        public string SymbolNameLong { get; set; }
+        public string BaseCoin { get; set; }
 
         /// <summary>
         /// Название монеты шорта 
         /// </summary>
-        public string? SymbolNameShort { get; set; } = "USDT";
+        public string? QuoteCoin { get; set; } = "USDT";
 
         public MarketType MarketType { get; set; }
     }
