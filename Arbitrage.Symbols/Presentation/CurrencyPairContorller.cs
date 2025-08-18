@@ -5,20 +5,19 @@ using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Net.Http;
 
 namespace Arbitrage.Symbols.Presentation
 {
     [ApiController]
     [Route("[controller]")]
-    public class CurrencyPairContorller : ControllerBase
+    public class CurrencyPairController : ControllerBase
     {
-        private readonly ILogger<CurrencyPairContorller> _logger;
+        private readonly ILogger<CurrencyPairController> _logger;
         private readonly ICurrencyPairService _currencyPairService;
 
 
-        public CurrencyPairContorller(
-            ILogger<CurrencyPairContorller> logger,
+        public CurrencyPairController(
+            ILogger<CurrencyPairController> logger,
             ICurrencyPairService currencyPairService)
         {
             _logger = logger;

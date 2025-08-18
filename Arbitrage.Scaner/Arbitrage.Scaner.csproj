@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Arbitrage.Domain\Arbitrage.Domain.csproj" />
+    <ProjectReference Include="..\Arbitrage.ExchangeDomain\Arbitrage.ExchangeDomain.csproj" />
+    <ProjectReference Include="..\Arbitrage.Symbols\Arbitrage.Symbols.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
