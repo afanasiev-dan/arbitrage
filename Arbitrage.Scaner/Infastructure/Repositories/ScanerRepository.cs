@@ -10,7 +10,6 @@ namespace Arbitrage.Scaner.Infastructure.Repositories
         private readonly DbContext _context;
         private readonly ILogger<ScanerRepository> _logger;
 
-
         public ScanerRepository(
             ILogger<ScanerRepository> logger,
             DbContext context)
@@ -18,20 +17,41 @@ namespace Arbitrage.Scaner.Infastructure.Repositories
             _logger = logger;
             _context = context;
         }
+
         public async Task<bool> AddScaners(IEnumerable<ScanerModel> scanerModels)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
+                await _context.Database.ExecuteSqlRawAsync($"DELETE FROM ScanerData");
+
                 await _context.Set<ScanerModel>().AddRangeAsync(scanerModels);
                 await _context.SaveChangesAsync();
 
+                await transaction.CommitAsync();
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError("Не получилось добавить данные сканера в базу данных: " + ex);
+                await transaction.RollbackAsync();
+                _logger.LogError("Не получилось обновить данные сканера в базе данных:" + ex);
                 return false;
             }
+
+
+            // try
+            // {
+            //     await _context.Set<ScanerModel>().AddRangeAsync(scanerModels);
+            //     await _context.SaveChangesAsync();
+
+            //     return true;
+            // }
+            // catch (Exception ex)
+            // {
+            //     _logger.LogError("Не получилось добавить данные сканера в базу данных: " + ex);
+            //     return false;
+            // }
         }
 
         public async Task<IEnumerable<ScanerModel>> GetScaners()
