@@ -65,13 +65,13 @@ public class CandleService : ICandleService
 
     public async Task<SpreadCandlesResponceDto> GetSpreadCandles(SpreadCandlesRequestDto requestDto)
     {
-        var candlesLongTask = GetCandlesFromDbOrApi(requestDto.ExchangeNameLong, requestDto.SymbolNameLong, requestDto.DateFrom, requestDto.DateTo, requestDto.MarketTypeLong);
-        var candlesShortTask = GetCandlesFromDbOrApi(requestDto.ExchangeNameShort, requestDto.SymbolNameShort, requestDto.DateFrom, requestDto.DateTo, requestDto.MarketTypeShort);
+        var candlesLongTask = await GetCandlesFromDbOrApi(requestDto.ExchangeNameLong, requestDto.SymbolNameLong, requestDto.DateFrom, requestDto.DateTo, requestDto.MarketTypeLong);
+        var candlesShortTask = await GetCandlesFromDbOrApi(requestDto.ExchangeNameShort, requestDto.SymbolNameShort, requestDto.DateFrom, requestDto.DateTo, requestDto.MarketTypeShort);
 
-        await Task.WhenAll(candlesLongTask, candlesShortTask);
+        //await Task.WhenAll(candlesLongTask, candlesShortTask);
 
-        var candlesLong = candlesLongTask.Result;
-        var candlesShort = candlesShortTask.Result;
+        var candlesLong = candlesLongTask;//.result
+        var candlesShort = candlesShortTask;//.result
 
         if (candlesLong is null || candlesShort is null || !candlesLong.Any() || !candlesShort.Any())
             throw new ArgumentNullException("Не найдены свечи");
@@ -110,7 +110,7 @@ public class CandleService : ICandleService
 
     private decimal GetSpreadOperation(decimal candleLong, decimal candleShort)
     {
-        return candleLong / candleShort;
+        return (candleShort / candleLong - 1)*100;
     }
 
     private async Task<List<Candle>> GetCandlesFromDbOrApi(string exchangeName, string symbolName, DateTime dateFrom, DateTime dateTo, MarketType marketType)
