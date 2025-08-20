@@ -1,9 +1,13 @@
 using Arbitrage.Exchange;
 using Arbitrage.Graph;
+using Arbitrage.User;
 using Arbitrage.Scaner;
 using Arbitrage.Symbols;
 using Arbitrage.WebApi.Infastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,23 +29,42 @@ builder.Services.AddDbContext<DbContext, AppDbContext>(options =>
     if (builder.Environment.IsDevelopment())
     {
         // Для разработки используем SQLite
-        options.UseSqlite("Data Source=arbitrage.db");
+        options.UseSqlite(builder.Configuration["ConnectionStrings:DefaultConnection"]);
     }
     // else
     // {
-        // Для продакшена - PostgreSQL
-        // options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"));
+    // Для продакшена - PostgreSQL
+    // options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"));
     // }
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Secret"])
+            ),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
 
 builder.Services.AddExchangeModule();
 builder.Services.AddSymbolsModule();
 builder.Services.AddGraphModule();
 builder.Services.AddScanerModule();
+builder.Services.AddUserModule();
 
 var app = builder.Build();
 
 ApplyMigrations(app);
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 
 if (app.Environment.IsDevelopment())
 {
