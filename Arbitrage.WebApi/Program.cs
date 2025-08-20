@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Arbitrage.Notification;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,7 @@ builder.Services.AddSymbolsModule();
 builder.Services.AddGraphModule();
 builder.Services.AddScanerModule();
 builder.Services.AddUserModule();
+builder.Services.AddNotificationModule();
 
 var app = builder.Build();
 

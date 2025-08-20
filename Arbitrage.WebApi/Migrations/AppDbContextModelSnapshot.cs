@@ -78,6 +78,33 @@ namespace Arbitrage.WebApi.Migrations
                     b.ToTable("Candles");
                 });
 
+            modelBuilder.Entity("Arbitrage.Notification.Domain.Entities.NotificationModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedAt")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("CurrencyPairId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("TargetPrice")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("Arbitrage.Scaner.Domain.Entities.ScanerModel", b =>
                 {
                     b.Property<Guid>("Id")
