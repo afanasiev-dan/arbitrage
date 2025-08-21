@@ -11,14 +11,24 @@ public static class PairF
 {
     public static async Task<List<CurrencyPairResponceDto>> GetCurrency()
     {
-        // TODO: вынести источник в конфиг (сейчас локальный JSON)
-        var response = File.ReadAllText("data/pairs.json");
-        var apiResponse = JsonConvert.DeserializeObject<ApiResponce>(response);
+        //var response = await Network.GetAsync("https://localhost:7102/CurrencyPair/currency-pairs");
+        //var apiResponse = JsonConvert.DeserializeObject<ApiResponce>(response);
 
-        if (apiResponse?.Result is JArray jArray)
-            return jArray.ToObject<List<CurrencyPairResponceDto>>();
+        //if (apiResponse?.Result is JArray jArray)
+        //    return jArray.ToObject<List<CurrencyPairResponceDto>>();
 
-        return new List<CurrencyPairResponceDto>();
+        //return new List<CurrencyPairResponceDto>();
+        List<CurrencyPairResponceDto> lst = new()
+        {
+            new CurrencyPairResponceDto {
+                BaseCoin = "",
+                QuoteCoin = "",
+                ExchangeName = "",
+                MarketType = 0,
+                Ticker = ""
+            }
+        };
+        return lst;
     }
 
     public static List<ArbitragePair> GetArbitrage(List<CurrencyPairResponceDto> currencyPairs)
