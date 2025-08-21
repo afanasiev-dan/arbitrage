@@ -4,17 +4,13 @@ using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
 using DataSocketService.Model;
 using DataSocketService.Other;
 using Newtonsoft.Json;
-using System;
 using System.Buffers;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace DataSocketService.Service
+namespace DataSocketService.Exchanges.Base
 {
     public abstract class SocketBase
     {
@@ -275,7 +271,7 @@ namespace DataSocketService.Service
             time_send_ping = DateTime.Now;
 
             var message = string.Empty;
-            if (myParent.Info.Name == Exchanges.LBank && myParent.Info.Type == MarketType.Futures)
+            if (myParent.Info.Name == Arbitrage.ExchangeDomain.Exchanges.LBank && myParent.Info.Type == MarketType.Futures)
                 message = (string)obj;
             else
                 message = JsonConvert.SerializeObject(obj);

@@ -1,8 +1,9 @@
 ﻿using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
+using DataSocketService.Exchanges.Base;
 using DataSocketService.Other;
 using System.Text.Json;
 
-namespace DataSocketService.Service.Exchan.ByBit
+namespace DataSocketService.Exchanges.ByBit
 {
     public class ByBitSocket : SocketBase
     {
@@ -93,9 +94,9 @@ namespace DataSocketService.Service.Exchan.ByBit
             while (reader.Read() && reader.TokenType == JsonTokenType.StartArray)
             {
                 reader.Read(); // price
-                decimal price = F.ToDec(reader.GetString());
+                decimal price = FormatUtils.ToDec(reader.GetString());
                 reader.Read(); // volume
-                decimal volume = F.ToDec(reader.GetString());
+                decimal volume = FormatUtils.ToDec(reader.GetString());
                 reader.Read(); // EndArray
                 dict.Add((price, volume));
             }

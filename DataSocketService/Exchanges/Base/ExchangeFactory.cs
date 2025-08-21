@@ -1,14 +1,14 @@
 ﻿using Arbitrage.ExchangeDomain;
 using Arbitrage.ExchangeDomain.Enums;
 using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
-using DataSocketService.Service.Exchan.ByBit;
+using DataSocketService.Exchanges.ByBit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataSocketService.Service.Exchan
+namespace DataSocketService.Exchanges.Base
 {
     public static class ExchangeFactory
     {
@@ -16,7 +16,7 @@ namespace DataSocketService.Service.Exchan
         {
             switch (exchangeName)
             {
-                case Exchanges.ByBit:
+                case Arbitrage.ExchangeDomain.Exchanges.ByBit:
                     return new ByBitExchange(exchangeName, exchangeType, currencyPairs);
                 //case Exchanges.Gate:
                 //    return new GateExchange(exchangeName, exchangeType, currencyPairs);

@@ -1,28 +1,16 @@
-﻿using Arbitrage.ExchangeDomain;
-using Arbitrage.ExchangeDomain.Enums;
-using Arbitrage.Symbols.Domain.Entities;
+﻿using Arbitrage.ExchangeDomain.Enums;
 using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
 using DataSocketService.Model;
 using DataSocketService.Other;
-using DataSocketService.Service.Exchan.ByBit;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataSocketService.Service
+namespace DataSocketService.Exchanges.Base
 {
     //ExchangeClient = 1 биржа
     //Sockets = 1 биржу делим на несколько групп (1000 подписок на одном сокете нельзя)
     public abstract class ExchangeBase
     {
         public (string Name, MarketType Type) Info;
-        public string Name => F.ExchangeToStr(Info.Name, Info.Type);
+        public string Name => FormatUtils.ExchangeToStr(Info.Name, Info.Type);
 
         public SocketSettings Settings => LaunchConfig.SocketSettings[Name];
         public List<SocketBase> Sockets = new();

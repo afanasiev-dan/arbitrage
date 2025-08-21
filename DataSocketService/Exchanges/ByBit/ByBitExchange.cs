@@ -1,12 +1,13 @@
 ﻿using Arbitrage.ExchangeDomain.Enums;
 using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
+using DataSocketService.Exchanges.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataSocketService.Service.Exchan.ByBit
+namespace DataSocketService.Exchanges.ByBit
 {
     internal class ByBitExchange : ExchangeBase
     {

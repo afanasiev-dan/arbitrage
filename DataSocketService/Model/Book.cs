@@ -1,19 +1,11 @@
-﻿using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DataSocketService.Model
 {
-    public class CurrencyPairBook
-    {
-        public CurrencyPairResponceDto Info;
-        public Book Book;
-
-        public CurrencyPairBook(CurrencyPairResponceDto info)
-        {
-            Info = info;
-            Book = new Book();
-        }
-    }
-
     public class Book
     {
         public List<(decimal price, decimal volume)> Asks = new();

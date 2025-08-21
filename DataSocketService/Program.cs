@@ -1,10 +1,7 @@
-﻿using Arbitrage.ExchangeDomain;
-using Arbitrage.ExchangeDomain.Enums;
-using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
+﻿using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
+using DataSocketService.CurrencyPairF;
+using DataSocketService.Exchanges.Base;
 using DataSocketService.Other;
-using DataSocketService.Service;
-using DataSocketService.Service.Exchan;
-using DataSocketService.Service.Exchan.ByBit;
 
 public class Program
 {
@@ -12,12 +9,12 @@ public class Program
 
     public static async Task Main(string[] args)
     {
-        var currencyPair = await F.GetCurrencyPair();
-        var arbitragePair = F.GetArbitragePair(currencyPair);
+        var currencyPair = await PairF.GetCurrency();
+        var arbitragePair = PairF.GetArbitrage(currencyPair);
 
         await CreateConnect(currencyPair);
         await StartListen();
-        _ = Task.Run(GetInfo);
+        _ = Task.Run(SendInfo);
 
         Console.ReadKey();
     }
@@ -33,21 +30,23 @@ public class Program
             Exchanges.Add(exchange);
         }
     }
+
     static async Task StartListen()
     {
         var tasks = Exchanges.Select(exchange => exchange.ConnectBook());
         await Task.WhenAll(tasks);
     }
-    static async Task GetInfo()
+
+    static async Task SendInfo()
     {
-        while(true)
+        while (true)
         {
             await Task.Delay(2000);
 
             var allBooks = Exchanges.SelectMany(x => x.GetAllBooks()).ToList();
             foreach (var item in allBooks)
             {
-                string name = F.ExchangeToStr(item.Info.ExchangeName, item.Info.MarketType);
+                string name = FormatUtils.ExchangeToStr(item.Info.ExchangeName, item.Info.MarketType);
                 Console.WriteLine($"[{name}] {item.Book.Asks[0].price} {item.Book.Bids[0].price}");
             }
         }
