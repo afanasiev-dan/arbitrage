@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbitrage.Domain", "Arbitra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbitrage.Scaner", "Arbitrage.Scaner\Arbitrage.Scaner.csproj", "{ED1DCDD0-6AB4-4812-943A-7FB1454A3DC6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSocketService", "DataSocketService\DataSocketService.csproj", "{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,11 +157,26 @@ Global
 		{ED1DCDD0-6AB4-4812-943A-7FB1454A3DC6}.Release|x64.Build.0 = Release|Any CPU
 		{ED1DCDD0-6AB4-4812-943A-7FB1454A3DC6}.Release|x86.ActiveCfg = Release|Any CPU
 		{ED1DCDD0-6AB4-4812-943A-7FB1454A3DC6}.Release|x86.Build.0 = Release|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Debug|x64.Build.0 = Debug|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Debug|x86.Build.0 = Debug|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|x64.ActiveCfg = Release|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|x64.Build.0 = Release|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|x86.ActiveCfg = Release|Any CPU
+		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{599F972F-D659-4B3C-A1F1-55BBBEE0465C} = {143CFA84-7034-EC0D-3582-3EB9FF6AB3DC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F09564C-FBB2-4D43-A787-786C5DF9645A}
 	EndGlobalSection
 EndGlobal

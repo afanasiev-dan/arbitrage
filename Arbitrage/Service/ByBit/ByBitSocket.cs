@@ -135,9 +135,6 @@ namespace Arbitrage.Service.ByBit
                         side.Add(update);
                 }
             }
-
-            //// Опционально сортировать, если вам нужен упорядоченный стакан
-            //side.Sort((x, y) => x.price.CompareTo(y.price)); // по возрастанию цены
         }
 
 

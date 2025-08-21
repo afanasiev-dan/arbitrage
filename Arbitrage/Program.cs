@@ -21,20 +21,20 @@ namespace ArbitrageSignalBot
                 ExchangeManager = new ExchangeManager();
                 await ExchangeManager.Start();
 
-                // var signalManager = new SignalManager("Data/signals.json");
-                // var telegramBot = new TelegramBot(signalManager);
-                // var fundingUpdater = new FundingUpdater(ExchangeManager);
-                // SignalProcessor = new SignalProcessor(signalManager, telegramBot, ExchangeManager.Cryptos);
+                //var signalManager = new SignalManager("Data/signals.json");
+                //var telegramBot = new TelegramBot(signalManager);
+                //var fundingUpdater = new FundingUpdater(ExchangeManager);
+                SignalProcessor = new SignalProcessor(signalManager, telegramBot, ExchangeManager.Cryptos);
 
-                // signalManager.LoadSignals();
+                //signalManager.LoadSignals();
 
-                // await ExchangeManager.Connect();
+                await ExchangeManager.Connect();
                 TimeStart = DateTime.Now;
                 Console.WriteLine($"ЗАПУСК {TimeStart}");
 
-                // fundingUpdater.Start();
-                // await fundingUpdater.WaitForInitializationAsync();
-                // SignalProcessor.Start();
+                //fundingUpdater.Start();
+                //await fundingUpdater.WaitForInitializationAsync();
+                SignalProcessor.Start();
             }
             catch (Exception ex)
             {
