@@ -5,7 +5,7 @@ using DataSocketService.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace DataSocketService.CurrencyPairF;
+namespace DataSocketService.Utils;
 
 public static class PairF
 {

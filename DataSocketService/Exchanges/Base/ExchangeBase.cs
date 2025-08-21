@@ -14,10 +14,12 @@ namespace DataSocketService.Exchanges.Base
 
         public SocketSettings Settings => LaunchConfig.SocketSettings[Name];
         public List<SocketBase> Sockets = new();
+        private readonly Func<SocketBase> _socketCreator;
 
-        public ExchangeBase(string exchangeName, MarketType exchangeType, List<CurrencyPairResponceDto> currencyPairs)
+        public ExchangeBase(string exchangeName, MarketType exchangeType, List<CurrencyPairResponceDto> currencyPairs, Func<SocketBase> socketCreator)
         {
             Info = (exchangeName, exchangeType);
+            _socketCreator = socketCreator ?? throw new ArgumentNullException(nameof(socketCreator));
 
             int size = currencyPairs.Count;
             int k = 1;
@@ -37,6 +39,7 @@ namespace DataSocketService.Exchanges.Base
         }
 
         public abstract SocketBase CreateSocketBook();
+        protected SocketBase CreateSocket() => _socketCreator();
 
         public List<CurrencyPairBook> GetAllBooks()
         {

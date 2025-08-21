@@ -3,6 +3,7 @@ using Arbitrage.ExchangeDomain.Enums;
 using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
 using DataSocketService.Model;
 using DataSocketService.Other;
+using DataSocketService.Utils;
 using Newtonsoft.Json;
 using System.Buffers;
 using System.Collections.Concurrent;
@@ -16,9 +17,10 @@ namespace DataSocketService.Exchanges.Base
     {
         protected ExchangeBase myParent;
         protected string Name => $"{myParent.Name}-{id}";
+        protected MarketType AssetType => myParent.Info.Type;
         protected SocketSettings Settings => myParent.Settings;
 
-        protected string url => myParent.Info.Type == MarketType.Spot ? urlSpot : urlFutures;
+        protected string url => AssetType == MarketType.Spot ? urlSpot : urlFutures;
         protected abstract string urlFutures { get; }
         protected abstract string urlSpot { get; }
 

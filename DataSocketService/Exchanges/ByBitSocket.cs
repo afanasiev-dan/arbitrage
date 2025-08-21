@@ -3,7 +3,7 @@ using DataSocketService.Exchanges.Base;
 using DataSocketService.Other;
 using System.Text.Json;
 
-namespace DataSocketService.Exchanges.ByBit
+namespace DataSocketService.Exchanges
 {
     public class ByBitSocket : SocketBase
     {

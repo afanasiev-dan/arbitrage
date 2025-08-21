@@ -1,12 +1,8 @@
-﻿using Arbitrage.ExchangeDomain;
-using Arbitrage.ExchangeDomain.Enums;
+﻿using Arbitrage.ExchangeDomain.Enums;
+using Arbitrage.Service.Gateio;
+using DataSocketService.Exchanges;
+using DataSocketService.Exchanges.Base;
 using DataSocketService.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Arbitrage.ExchangeDomain;
 
 namespace DataSocketService
 {
@@ -20,22 +16,33 @@ namespace DataSocketService
 
         public static Dictionary<string, SocketSettings> SocketSettings = new()
         {
-            {$"{Arbitrage.ExchangeDomain.Exchanges.Gate}-{MarketType.Spot}", new()},
-            {$"{Arbitrage.ExchangeDomain.Exchanges.Gate}-{MarketType.Futures}", new()},
+            {$"{Arbitrage.ExchangeDomain.Exchanges.Gate}-{MarketType.Spot}",
+                new(() => new GateioSocket())},
+            {$"{Arbitrage.ExchangeDomain.Exchanges.Gate}-{MarketType.Futures}",
+                new(() => new GateioSocket())},
 
-            {$"{Arbitrage.ExchangeDomain.Exchanges.ByBit}-{MarketType.Spot}", new()},
-            {$"{Arbitrage.ExchangeDomain.Exchanges.ByBit}-{MarketType.Futures}", new()},
+            {$"{Arbitrage.ExchangeDomain.Exchanges.ByBit}-{MarketType.Spot}",
+                new(() => new ByBitSocket())},
+            {$"{Arbitrage.ExchangeDomain.Exchanges.ByBit}-{MarketType.Futures}",
+                new(() => new ByBitSocket())},
 
-            {$"{Arbitrage.ExchangeDomain.Exchanges.KuCoin}-{MarketType.Spot}", new()},
-            {$"{Arbitrage.ExchangeDomain.Exchanges.KuCoin}-{MarketType.Futures}", new()},
+            {$"{Arbitrage.ExchangeDomain.Exchanges.KuCoin}-{MarketType.Spot}", 
+                new(() => new ByBitSocket())},
+            {$"{Arbitrage.ExchangeDomain.Exchanges.KuCoin}-{MarketType.Futures}", 
+                new(() => new ByBitSocket())},
 
-            {$"{Arbitrage.ExchangeDomain.Exchanges.Mexc}-{MarketType.Spot}", new()},
-            {$"{Arbitrage.ExchangeDomain.Exchanges.Mexc}-{MarketType.Futures}", new()},
+            {$"{Arbitrage.ExchangeDomain.Exchanges.Mexc}-{MarketType.Spot}", 
+                new(() => new ByBitSocket())},
+            {$"{Arbitrage.ExchangeDomain.Exchanges.Mexc}-{MarketType.Futures}", 
+                new(() => new ByBitSocket())},
 
-            {$"{Arbitrage.ExchangeDomain.Exchanges.Htx}-{MarketType.Spot}", new() { CheckConnectByPing = false, TimerWaitPong = 20 } },
-            {$"{Arbitrage.ExchangeDomain.Exchanges.Htx}-{MarketType.Futures}", new() {CheckConnectByPing = false, TimerWaitPong = 20} },
+            {$"{Arbitrage.ExchangeDomain.Exchanges.Htx}-{MarketType.Spot}", 
+                new(() => new ByBitSocket(), checkConnectByPing:false, timerWaitPong:20) },
+            {$"{Arbitrage.ExchangeDomain.Exchanges.Htx}-{MarketType.Futures}", 
+                new(() => new ByBitSocket(), checkConnectByPing:false, timerWaitPong:20) },
 
-            {$"{Arbitrage.ExchangeDomain.Exchanges.LBank}-{MarketType.Spot}", new() {WsCap = 50} },
+            {$"{Arbitrage.ExchangeDomain.Exchanges.LBank}-{MarketType.Spot}", 
+                new(() => new ByBitSocket(), wsCap:50)},
         };
     }
 }

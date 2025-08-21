@@ -1,20 +1,25 @@
-﻿namespace DataSocketService.Model
+﻿using DataSocketService.Exchanges.Base;
+
+namespace DataSocketService.Model
 {
     public class SocketSettings
     {
-        public int WsCap { get; }
+        public int WsCap;
         public int WsCapMax { get; } = 1;
-        public bool CheckConnectByPing { get; }
-        public float TimerWaitPong { get; private set; }
-        public int IntervalPing { get; }
+        public bool CheckConnectByPing;
+        public float TimerWaitPong;
+        public int IntervalPing;
+        public Func<SocketBase> SocketCreator { get; }
 
         public SocketSettings(
+            Func<SocketBase> socketCreator,
             int wsCap = int.MaxValue,
             int maxSub = 0,
             bool checkConnectByPing = true,
             float timerWaitPong = 0,
             int intervalPing = 0)
         {
+            SocketCreator = socketCreator;
             WsCap = wsCap;
             CheckConnectByPing = checkConnectByPing;
 

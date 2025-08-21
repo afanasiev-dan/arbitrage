@@ -1,7 +1,7 @@
 ﻿using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
-using DataSocketService.CurrencyPairF;
 using DataSocketService.Exchanges.Base;
 using DataSocketService.Other;
+using DataSocketService.Utils;
 
 public class Program
 {
