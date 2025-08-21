@@ -4,7 +4,7 @@ namespace DataSocketService.Model
 {
     public class ArbitragePair
     {
-        public CurrencyPairResponceDto LongPair;
-        public CurrencyPairResponceDto ShortPair;
+        public CurrencyPairBook LongPair;
+        public CurrencyPairBook ShortPair;
     }
 }

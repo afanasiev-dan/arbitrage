@@ -21,22 +21,22 @@ public static class PairF
         //}
         string msg = File.ReadAllText("data/pairs.json");
         var t = JsonConvert.DeserializeObject<List<CurrencyPairResponceDto>>(msg);
-        t = t.Where(x => x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Mexc && x.MarketType == MarketType.Futures).ToList();
+        //t = t.Where(x => x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.ByBit).ToList();// && x.MarketType == MarketType.Futures
         return t;
     }
 
-    public static List<ArbitragePair> GetArbitrage(List<CurrencyPairResponceDto> currencyPairs)
+    public static List<ArbitragePair> GetArbitrage(List<CurrencyPairBook> currencyPairs)
     {
         var groupedPairs = currencyPairs
-            .GroupBy(p => new { p.BaseCoin, p.QuoteCoin })
+            .GroupBy(p => new { p.Info.BaseCoin, p.Info.QuoteCoin })
             .Where(g => g.Count() >= 2);
 
         var arbPairs = new List<ArbitragePair>();
 
         foreach (var group in groupedPairs)
         {
-            var futures = group.Where(p => p.MarketType == MarketType.Futures).ToList();
-            var spots = group.Where(p => p.MarketType == MarketType.Spot).ToList();
+            var futures = group.Where(p => p.Info.MarketType == MarketType.Futures).ToList();
+            var spots = group.Where(p => p.Info.MarketType == MarketType.Spot).ToList();
 
             // Spot + Futures
             if (spots.Any() && futures.Any())
