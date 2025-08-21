@@ -76,7 +76,7 @@ namespace DataSocketService.Exchanges.Base
             {
                 string[] messages = chunk.Select(info => MessageSubscribe(info)).ToArray();
                 var json = JsonConvert.SerializeObject(MessageSubscribeAll(messages));
-                Console.WriteLine(json);
+                //Console.WriteLine(json);
                 await _webSocket.SendAsync(
                     Encoding.UTF8.GetBytes(json),
                     WebSocketMessageType.Text,
@@ -279,7 +279,7 @@ namespace DataSocketService.Exchanges.Base
                 message = JsonConvert.SerializeObject(obj);
             try
             {
-                Console.WriteLine(message);
+                //Console.WriteLine(message);
                 await _webSocket.SendAsync(
                    Encoding.UTF8.GetBytes(message),
                    WebSocketMessageType.Text,
@@ -302,7 +302,7 @@ namespace DataSocketService.Exchanges.Base
             var pong = JsonConvert.SerializeObject(message);
             try
             {
-                Console.WriteLine(pong);
+                //Console.WriteLine(pong);
                 await _webSocket.SendAsync(
                     Encoding.UTF8.GetBytes(pong),
                     WebSocketMessageType.Text,

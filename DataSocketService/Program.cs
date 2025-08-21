@@ -2,6 +2,7 @@
 using DataSocketService.Exchanges.Base;
 using DataSocketService.Other;
 using DataSocketService.Utils;
+using Newtonsoft.Json;
 
 public class Program
 {
@@ -10,7 +11,7 @@ public class Program
     public static async Task Main(string[] args)
     {
         var currencyPair = await PairF.GetCurrency();
-        var arbitragePair = PairF.GetArbitrage(currencyPair);
+        //var arbitragePair = PairF.GetArbitrage(currencyPair);
 
         await CreateConnect(currencyPair);
         await StartListen();
@@ -48,7 +49,9 @@ public class Program
             {
                 string name = FormatUtils.ExchangeToStr(item.Info.ExchangeName, item.Info.MarketType);
                 Console.WriteLine($"[{name}] {item.Book.Asks[0].price} {item.Book.Bids[0].price}");
+                //отправить
             }
+
         }
     }
 }

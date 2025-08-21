@@ -1,4 +1,5 @@
 ﻿using Arbitrage.Domain;
+using Arbitrage.ExchangeDomain;
 using Arbitrage.ExchangeDomain.Enums;
 using Arbitrage.Symbols.Presentation.Dto.CurrencyPair;
 using DataSocketService.Model;
@@ -13,22 +14,15 @@ public static class PairF
     {
         //var response = await Network.GetAsync("https://localhost:7102/CurrencyPair/currency-pairs");
         //var apiResponse = JsonConvert.DeserializeObject<ApiResponce>(response);
-
         //if (apiResponse?.Result is JArray jArray)
-        //    return jArray.ToObject<List<CurrencyPairResponceDto>>();
-
-        //return new List<CurrencyPairResponceDto>();
-        List<CurrencyPairResponceDto> lst = new()
-        {
-            new CurrencyPairResponceDto {
-                BaseCoin = "",
-                QuoteCoin = "",
-                ExchangeName = "",
-                MarketType = 0,
-                Ticker = ""
-            }
-        };
-        return lst;
+        //{
+        //    var lst = jArray.ToObject<List<CurrencyPairResponceDto>>();
+        //    return lst;
+        //}
+        string msg = File.ReadAllText("data/pairs.json");
+        var t = JsonConvert.DeserializeObject<List<CurrencyPairResponceDto>>(msg);
+        t = t.Where(x => x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Mexc && x.MarketType == MarketType.Futures).ToList();
+        return t;
     }
 
     public static List<ArbitragePair> GetArbitrage(List<CurrencyPairResponceDto> currencyPairs)
