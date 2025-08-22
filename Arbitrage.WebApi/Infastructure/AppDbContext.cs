@@ -54,6 +54,16 @@ public class AppDbContext : DbContext
             .HasOne(e => e.ExchangeShort)
             .WithMany()
             .HasForeignKey(s => s.ExchangeIdShort);
+
+        modelBuilder.Entity<ScanerModel>()
+            .HasOne(e => e.TickerLong)
+            .WithMany()
+            .HasForeignKey(s => s.TickerLongId);
+
+        modelBuilder.Entity<ScanerModel>()
+            .HasOne(e => e.TickerShort)
+            .WithMany()
+            .HasForeignKey(s => s.TickerShortId);
         // modelBuilder.Entity<CurrencyPair>()
         //     .HasOne(cp => cp.BaseCoin)
         //     .WithMany()

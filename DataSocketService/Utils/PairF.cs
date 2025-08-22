@@ -12,17 +12,24 @@ public static class PairF
 {
     public static async Task<List<CurrencyPairResponceDto>> GetCurrency()
     {
-        //var response = await Network.GetAsync("https://localhost:7102/CurrencyPair/currency-pairs");
-        //var apiResponse = JsonConvert.DeserializeObject<ApiResponce>(response);
-        //if (apiResponse?.Result is JArray jArray)
-        //{
-        //    var lst = jArray.ToObject<List<CurrencyPairResponceDto>>();
-        //    return lst;
-        //}
-        string msg = File.ReadAllText("data/pairs.json");
-        var t = JsonConvert.DeserializeObject<List<CurrencyPairResponceDto>>(msg);
+        var response = await Network.GetAsync("https://localhost:7102/CurrencyPair/currency-pairs");
+        var apiResponse = JsonConvert.DeserializeObject<ApiResponce>(response);
+        if (apiResponse?.Result is JArray jArray)
+        {
+            var lst = jArray.ToObject<List<CurrencyPairResponceDto>>();
+            lst = lst.Where(x => x.BaseCoin == "XMR" &&
+            !(x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.LBank && x.MarketType == MarketType.Futures) &&
+            !(x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Mexc && x.MarketType == MarketType.Spot) &&
+            !(x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Binance)
+            ).ToList();
+            return lst;
+        }
+        return null;
+
+        //string msg = File.ReadAllText("data/pairs.json");
+        //var t = JsonConvert.DeserializeObject<List<CurrencyPairResponceDto>>(msg);
         //t = t.Where(x => x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.ByBit).ToList();// && x.MarketType == MarketType.Futures
-        return t;
+        //return t;
     }
 
     public static List<ArbitragePair> GetArbitrage(List<CurrencyPairBook> currencyPairs)

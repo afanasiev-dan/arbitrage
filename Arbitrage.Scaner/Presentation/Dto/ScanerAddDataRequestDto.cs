@@ -12,12 +12,13 @@ namespace Arbitrage.Scaner.Presentation.Dto
         public MarketType MarketTypeLong { get; set; }
         public decimal PurchasePriceLong { get; set; }
         public decimal FundingRateLong { get; set; }
-
+        public string TickerLong { get; set; }
 
         public string ExchangeNameShort { get; set; }
         public MarketType MarketTypeShort { get; set; }
         public decimal PurchasePriceShort { get; set; }
         public decimal FundingRateShort { get; set; }
+        public string TickerShort { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

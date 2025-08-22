@@ -1,5 +1,7 @@
 using Arbitrage.Domain;
+using Arbitrage.ExchangeDomain.Enums;
 using Arbitrage.Scaner.Application.Contracts;
+using Arbitrage.Scaner.Domain.Entities;
 using Arbitrage.Scaner.Presentation.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,22 +15,46 @@ namespace Arbitrage.Scaner.Presentation
         ILogger<ScanerController> logger,
         IScanerService scanerService) : ControllerBase
     {
-        
-        private readonly ILogger<ScanerController> _logger = logger;
-        private readonly  IScanerService _scanerService = scanerService;
 
-        [HttpGet("scaner")]
+        private readonly ILogger<ScanerController> _logger = logger;
+        private readonly IScanerService _scanerService = scanerService;
+
+        [HttpPost("get_scaner")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetScaners()
+        public async Task<IActionResult> GetScaners(FilterRequestDto filter)
         {
             var result = await _scanerService.GetScaners();
 
             if (result == null || !result.Any())
                 return NotFound(new ApiResponce() { RetMsg = "Данные не найдены" });
 
-            var responce = result.Select(cp =>
+            #region Filtered
+            var filteredResult = result.AsEnumerable();
+
+            //if (filter.SpotExchanges != null && filter.SpotExchanges.Count != 0)
+            //{
+            //    List<ScanerModel> filtered = new();
+            //    foreach(var s in result)
+            //    {
+            //        if(s.MarketTypeLong == MarketType.Spot)
+            //        {
+            //            if(filter.SpotExchanges.)
+            //        }
+            //        else
+            //        {
+            //            filtered.Add(s);
+            //        }
+            //    }
+            //}
+
+
+            if (!filteredResult.Any())
+                return Ok(new ApiResponce() { RetMsg = "Данные не найдены по указанным фильтрам" });
+            #endregion
+
+            var responce = filteredResult.Select(cp =>
             {
                 var responce = new ScanerAddDataRequestDto()
                 {

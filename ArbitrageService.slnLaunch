@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Новый профиль",
+    "Projects": [
+      {
+        "Path": "Arbitrage.WebApi\\Arbitrage.WebApi.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "DataSocketService\\DataSocketService.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

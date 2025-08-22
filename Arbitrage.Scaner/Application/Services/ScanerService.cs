@@ -12,12 +12,14 @@ namespace Arbitrage.Scaner.Application.Services
         ILogger<ScanerService> logger,
         IScanerRepository scanerRepository,
         ICoinRepository coinRepository,
-        IExchangeRepository exchangeRepository) : IScanerService
+        IExchangeRepository exchangeRepository,
+        ICurrencyPairRepository currencyPairRepository) : IScanerService
     {
         private readonly IScanerRepository _scanerRepository = scanerRepository;
         private readonly ILogger<ScanerService> _logger = logger;
         private readonly ICoinRepository _coinRepository = coinRepository;
         private readonly IExchangeRepository _exchangeRepository = exchangeRepository;
+        private readonly ICurrencyPairRepository _currencyPairRepository = currencyPairRepository;
 
         public async Task<bool> AddScaners(IEnumerable<ScanerAddDataRequestDto> scanerDto)
         {
@@ -26,6 +28,7 @@ namespace Arbitrage.Scaner.Application.Services
 
             var exchanges = await _exchangeRepository.GetAllAsync();
             var symbols = await _coinRepository.GetAllAsync();
+            var currencyPairs = await _currencyPairRepository.GetAllAsync();
 
             if (exchanges is null || !exchanges.Any())
                 throw new ArgumentNullException("Не найдена биржa");
@@ -41,8 +44,10 @@ namespace Arbitrage.Scaner.Application.Services
                 var quoteCoin = symbols.FirstOrDefault(s => s.Name == scaner.QuoteCoinName);
                 var exchangeLong = exchanges.FirstOrDefault(e => e.Name == scaner.ExchangeNameLong);
                 var exchangeShort = exchanges.FirstOrDefault(e => e.Name == scaner.ExchangeNameShort);
+                var currencyPairLong = currencyPairs.FirstOrDefault(x => x.BaseCoin.Name == baseCoin.Name && x.QuoteCoin.Name == quoteCoin.Name && x.Exchange.Name == exchangeLong.Name);
+                var currencyPairShort = currencyPairs.FirstOrDefault(x => x.BaseCoin.Name == baseCoin.Name && x.QuoteCoin.Name == quoteCoin.Name && x.Exchange.Name == exchangeShort.Name);
 
-                if (baseCoin is null || quoteCoin is null || exchangeLong is null || exchangeShort is null)
+                if (baseCoin is null || quoteCoin is null || exchangeLong is null || exchangeShort is null || currencyPairLong is null || currencyPairShort is null)
                     throw new ArgumentNullException("Не найден символ или биржa");
 
                 var scanerModel = new ScanerModel()
@@ -57,7 +62,9 @@ namespace Arbitrage.Scaner.Application.Services
                     FundingRateLong = scaner.FundingRateLong,
                     MarketTypeShort = scaner.MarketTypeShort,
                     PurchasePriceShort = scaner.PurchasePriceShort,
-                    FundingRateShort = scaner.FundingRateShort
+                    FundingRateShort = scaner.FundingRateShort,
+                    TickerLongId = currencyPairLong.Id,
+                    TickerShortId = currencyPairShort.Id,
                 };
 
                 scanerModels.Add(scanerModel);

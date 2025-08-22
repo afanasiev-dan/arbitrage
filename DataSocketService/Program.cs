@@ -75,7 +75,10 @@ public class Program
                     FundingRateShort = 0,
                     PurchasePriceLong = item.LongPair.Book.Ask,
                     PurchasePriceShort = item.LongPair.Book.Bid,
+                    TickerLong = item.LongPair.Info.Ticker,
+                    TickerShort = item.ShortPair.Info.Ticker,
                 };
+                string json = JsonConvert.SerializeObject(line);
                 result.Add(line);
             }
 
