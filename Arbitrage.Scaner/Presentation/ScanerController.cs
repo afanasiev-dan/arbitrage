@@ -3,6 +3,7 @@ using Arbitrage.ExchangeDomain.Enums;
 using Arbitrage.Scaner.Application.Contracts;
 using Arbitrage.Scaner.Domain.Entities;
 using Arbitrage.Scaner.Presentation.Dto;
+using Arbitrage.Scaner.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -30,41 +31,9 @@ namespace Arbitrage.Scaner.Presentation
             if (result == null || !result.Any())
                 return NotFound(new ApiResponce() { RetMsg = "Данные не найдены" });
 
-            #region Filtered
-            var filteredResult = new List<ScanerModel>();
-
-            foreach (var s in result)
-            {
-                bool include = true;
-                if (filter.SpotExchanges != null && s.MarketTypeLong == MarketType.Spot)
-                {
-                    if (!filter.SpotExchanges.Contains(s.ExchangeLong.Name))
-                    {
-                        include = false;
-                    }
-                }
-                if (include && filter.FuturesExchanges != null)
-                {
-                    if (s.MarketTypeShort == MarketType.Futures && !filter.FuturesExchanges.Contains(s.ExchangeShort.Name))
-                    {
-                        include = false;
-                    }
-
-                    if (include && s.MarketTypeLong == MarketType.Futures && !filter.FuturesExchanges.Contains(s.ExchangeLong.Name))
-                    {
-                        include = false;
-                    }
-                }
-
-                if (include)
-                {
-                    filteredResult.Add(s);
-                }
-            }
-
+            var filteredResult = FilterScaner.ApplyFilter(result, filter);
             if (!filteredResult.Any())
                 return Ok(new ApiResponce() { RetMsg = "Данные не найдены по указанным фильтрам" });
-            #endregion
 
             var responce = filteredResult.Select(cp =>
             {

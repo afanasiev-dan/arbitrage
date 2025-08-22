@@ -10,5 +10,6 @@ namespace Arbitrage.Scaner.Presentation.Dto
     {
         public List<string>? SpotExchanges { get; set; }
         public List<string>? FuturesExchanges { get; set; }
+        public decimal? MinArbitrageRate { get; set; }
     }
 }
