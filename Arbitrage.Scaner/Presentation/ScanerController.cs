@@ -67,7 +67,9 @@ namespace Arbitrage.Scaner.Presentation
                     PurchasePriceLong = cp.PurchasePriceLong,
                     PurchasePriceShort = cp.PurchasePriceShort,
                     FundingRateLong = cp.FundingRateLong,
-                    FundingRateShort = cp.FundingRateShort
+                    FundingRateShort = cp.FundingRateShort,
+                    TickerLong = cp.TickerLong.Pair,
+                    TickerShort = cp.TickerShort.Pair
                 };
 
                 return responce;

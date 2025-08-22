@@ -61,6 +61,8 @@ namespace Arbitrage.Scaner.Infastructure.Repositories
               .Include(x => x.QuoteCoin)
               .Include(x => x.ExchangeLong)
               .Include(x => x.ExchangeShort)
+              .Include(x => x.TickerLong)
+              .Include(x => x.TickerShort)
               .AsNoTracking()
               .ToListAsync();
         }

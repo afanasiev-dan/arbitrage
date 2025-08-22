@@ -130,6 +130,10 @@ namespace Arbitrage.WebApi.Migrations
 
                     b.HasIndex("QuoteCoinId");
 
+                    b.HasIndex("TickerLongId");
+
+                    b.HasIndex("TickerShortId");
+
                     b.ToTable("ScanerData");
                 });
 
@@ -229,6 +233,18 @@ namespace Arbitrage.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Arbitrage.Symbols.Domain.Entities.CurrencyPair", "TickerLong")
+                        .WithMany()
+                        .HasForeignKey("TickerLongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Arbitrage.Symbols.Domain.Entities.CurrencyPair", "TickerShort")
+                        .WithMany()
+                        .HasForeignKey("TickerShortId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("BaseCoin");
 
                     b.Navigation("ExchangeLong");
@@ -236,6 +252,10 @@ namespace Arbitrage.WebApi.Migrations
                     b.Navigation("ExchangeShort");
 
                     b.Navigation("QuoteCoin");
+
+                    b.Navigation("TickerLong");
+
+                    b.Navigation("TickerShort");
                 });
 
             modelBuilder.Entity("Arbitrage.Symbols.Domain.Entities.CurrencyPair", b =>

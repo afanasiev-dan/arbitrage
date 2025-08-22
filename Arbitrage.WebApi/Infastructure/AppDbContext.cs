@@ -35,15 +35,15 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(e => e.CurrencyPairId);
 
-        // modelBuilder.Entity<ScanerModel>()
-        //     .HasOne(e => e.TickerLong)
-        //     .WithMany()
-        //     .HasForeignKey(s => s.TickerLongId);
+        modelBuilder.Entity<ScanerModel>()
+            .HasOne(e => e.TickerLong)
+            .WithMany()
+            .HasForeignKey(s => s.TickerLongId);
 
-        // modelBuilder.Entity<ScanerModel>()
-        //     .HasOne(e => e.TickerShort)
-        //     .WithMany()
-        //     .HasForeignKey(s => s.TickerShortId);
+        modelBuilder.Entity<ScanerModel>()
+            .HasOne(e => e.TickerShort)
+            .WithMany()
+            .HasForeignKey(s => s.TickerShortId);
 
         modelBuilder.Entity<ScanerModel>()
             .HasOne(e => e.BaseCoin)
