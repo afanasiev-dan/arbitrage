@@ -31,24 +31,36 @@ namespace Arbitrage.Scaner.Presentation
                 return NotFound(new ApiResponce() { RetMsg = "Данные не найдены" });
 
             #region Filtered
-            var filteredResult = result.AsEnumerable();
+            var filteredResult = new List<ScanerModel>();
 
-            //if (filter.SpotExchanges != null && filter.SpotExchanges.Count != 0)
-            //{
-            //    List<ScanerModel> filtered = new();
-            //    foreach(var s in result)
-            //    {
-            //        if(s.MarketTypeLong == MarketType.Spot)
-            //        {
-            //            if(filter.SpotExchanges.)
-            //        }
-            //        else
-            //        {
-            //            filtered.Add(s);
-            //        }
-            //    }
-            //}
+            foreach (var s in result)
+            {
+                bool include = true;
+                if (filter.SpotExchanges != null && s.MarketTypeLong == MarketType.Spot)
+                {
+                    if (!filter.SpotExchanges.Contains(s.ExchangeLong.Name))
+                    {
+                        include = false;
+                    }
+                }
+                if (include && filter.FuturesExchanges != null)
+                {
+                    if (s.MarketTypeShort == MarketType.Futures && !filter.FuturesExchanges.Contains(s.ExchangeShort.Name))
+                    {
+                        include = false;
+                    }
 
+                    if (include && s.MarketTypeLong == MarketType.Futures && !filter.FuturesExchanges.Contains(s.ExchangeLong.Name))
+                    {
+                        include = false;
+                    }
+                }
+
+                if (include)
+                {
+                    filteredResult.Add(s);
+                }
+            }
 
             if (!filteredResult.Any())
                 return Ok(new ApiResponce() { RetMsg = "Данные не найдены по указанным фильтрам" });
