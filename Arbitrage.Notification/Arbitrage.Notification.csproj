@@ -31,6 +31,12 @@
       </PackageReference>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0-preview.5.25277.114" />
       <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0-preview.5.25277.114" />
+      <PackageReference Include="Telegram.Bot" Version="22.6.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Arbitrage.User\Arbitrage.User.csproj" />
+      <ProjectReference Include="..\Arbitrage.Domain\Arbitrage.Domain.csproj" />
     </ItemGroup>
 
 </Project>

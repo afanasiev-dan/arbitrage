@@ -1,3 +1,4 @@
+using Arbitrage.Notification.Application.Contracts;
 using Arbitrage.Notification.Presentation.Dto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,14 +7,13 @@ namespace Arbitrage.Notification.Presentation
 
     [ApiController]
     [Route("api/[controller]")]
-    public class NotificationsController : ControllerBase
+    public class NotificationsController(
+        INotificationService service,
+        ITelegramUserSettingsService telegramUserSettingsService) : ControllerBase
     {
-        private readonly INotificationService _service;
+        private readonly INotificationService _service = service;
+        private readonly ITelegramUserSettingsService _telegramUserSettingsService = telegramUserSettingsService;
 
-        public NotificationsController(INotificationService service)
-        {
-            _service = service;
-        }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateNotificationDto dto)
@@ -51,6 +51,18 @@ namespace Arbitrage.Notification.Presentation
         {
             var notifications = await _service.GetCurrencyPairNotificationsAsync(currencyPairId);
             return Ok(notifications);
+        }
+
+        [HttpPost("kek")]
+        public async Task<IActionResult> AddKek()
+        {
+            return Ok(_telegramUserSettingsService.CreateOrUpdateSettingsAsync("kek", "kek", "kek"));
+        }
+
+        [HttpGet("kek")]
+        public async Task<IActionResult> GetKek()
+        {
+            return Ok(_telegramUserSettingsService.GetSettingsByChatIdAsync("kek"));
         }
     }
 }

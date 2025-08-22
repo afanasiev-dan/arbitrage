@@ -4,14 +4,9 @@ using Arbitrage.Notification.Presentation.Dto;
 
 namespace Arbitrage.Notification
 {
-    public class NotificationService : INotificationService
+    public class NotificationService(INotificationRepository repository) : INotificationService
     {
-        private readonly INotificationRepository _repository;
-
-        public NotificationService(INotificationRepository repository)
-        {
-            _repository = repository;
-        }
+        private readonly INotificationRepository _repository = repository;
 
         public async Task<NotificationModel> CreateNotificationAsync(CreateNotificationDto dto)
         {

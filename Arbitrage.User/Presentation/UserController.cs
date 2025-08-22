@@ -22,7 +22,7 @@ namespace Arbitrage.User.Presentation
             try
             {
                 var user = await _userService.RegisterAsync(request.Username, request.Password, request.Email, request.TelegramId, request.Role);
-                return Ok(new { user.Id, user.Username, user.Email, user.TelegramId, user.Role, user.CreatedAt });
+                return Ok(new { user.Id, user.Username, user.Email, user.Role, user.CreatedAt });
             }
             catch (Exception ex)
             {

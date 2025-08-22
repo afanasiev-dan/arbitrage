@@ -44,7 +44,7 @@ namespace Arbitrage.User.Infastructure.Repositories
 
         public async Task<UserModel> GetByIdAsync(Guid id)
         {
-            return await _context.Set<UserModel>().FindAsync(id) ?? new UserModel();
+            return await _context.Set<UserModel>().FindAsync(id) ?? null;
         }
 
         public async Task UpdateAsync(UserModel user)

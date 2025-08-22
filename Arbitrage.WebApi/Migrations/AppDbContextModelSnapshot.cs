@@ -17,6 +17,41 @@ namespace Arbitrage.WebApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
 
+            modelBuilder.Entity("Arbitrage.Domain.TelegramBot.Entities.TelegramUserSettings", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ChatId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedAt")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StateData")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdateAt")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TelegramUserSettings");
+                });
+
             modelBuilder.Entity("Arbitrage.Exchange.Domain.Entities.ExchangeModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -231,7 +266,7 @@ namespace Arbitrage.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TelegramId")
+                    b.Property<Guid?>("TelegramUserSettingsId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
@@ -239,6 +274,8 @@ namespace Arbitrage.WebApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TelegramUserSettingsId");
 
                     b.ToTable("Users");
                 });
@@ -322,6 +359,15 @@ namespace Arbitrage.WebApi.Migrations
                     b.Navigation("Exchange");
 
                     b.Navigation("QuoteCoin");
+                });
+
+            modelBuilder.Entity("Arbitrage.User.Domain.Entities.UserModel", b =>
+                {
+                    b.HasOne("Arbitrage.Domain.TelegramBot.Entities.TelegramUserSettings", "TelegramUserSettings")
+                        .WithMany()
+                        .HasForeignKey("TelegramUserSettingsId");
+
+                    b.Navigation("TelegramUserSettings");
                 });
 #pragma warning restore 612, 618
         }

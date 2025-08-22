@@ -28,7 +28,7 @@ namespace Arbitrage.User.Application.Services
             if (existingUser!.Email == email) throw new Exception("Ошиббка регистрации, пользователь с таким email уже зарегистрирован. СЛИШКОМ ИНФРОМАТИВНОЕ СООБЩЕНИЕ, ЗАМЕНИТЬ ПОЛЕ ТЕСТОВ!!!");
 
             var passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
-            var user = new UserModel { Username = username, PasswordHash = passwordHash, Email = email, TelegramId = telegramId, Role = role };
+            var user = new UserModel { Username = username, PasswordHash = passwordHash, Email = email,Role = role };
 
             return await _userRepository.CreateAsync(user);
         }
