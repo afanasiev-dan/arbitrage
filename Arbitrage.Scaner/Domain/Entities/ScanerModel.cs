@@ -23,12 +23,12 @@ namespace Arbitrage.Scaner.Domain.Entities
         public Guid TickerShortId { get; set; }
 
         // Навигационные свойства
-        public CurrencyPair? TickerLong { get; set; }
-        public CurrencyPair? TickerShort { get; set; }
-        public Coin? BaseCoin{ get; set; }
-        public Coin? QuoteCoin{ get; set; }
-        public ExchangeModel? ExchangeLong{ get; set; }
-        public ExchangeModel? ExchangeShort{ get; set; }
+        // public virtual CurrencyPair? TickerLong { get; set; }
+        // public virtual CurrencyPair? TickerShort { get; set; }
+        public virtual Coin? BaseCoin{ get; set; }
+        public virtual Coin? QuoteCoin{ get; set; }
+        public virtual ExchangeModel? ExchangeLong{ get; set; }
+        public virtual ExchangeModel? ExchangeShort{ get; set; }
 
     }
 }
