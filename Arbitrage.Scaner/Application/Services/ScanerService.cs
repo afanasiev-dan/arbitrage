@@ -44,8 +44,8 @@ namespace Arbitrage.Scaner.Application.Services
                 var quoteCoin = symbols.FirstOrDefault(s => s.Name == scaner.QuoteCoinName);
                 var exchangeLong = exchanges.FirstOrDefault(e => e.Name == scaner.ExchangeNameLong);
                 var exchangeShort = exchanges.FirstOrDefault(e => e.Name == scaner.ExchangeNameShort);
-                var currencyPairLong = currencyPairs.FirstOrDefault(x => x.BaseCoin.Name == baseCoin.Name && x.QuoteCoin.Name == quoteCoin.Name && x.Exchange.Name == exchangeLong.Name);
-                var currencyPairShort = currencyPairs.FirstOrDefault(x => x.BaseCoin.Name == baseCoin.Name && x.QuoteCoin.Name == quoteCoin.Name && x.Exchange.Name == exchangeShort.Name);
+                var currencyPairLong = currencyPairs.FirstOrDefault(x => x.Pair == scaner.TickerLong && x.Exchange.Name == exchangeLong.Name);
+                var currencyPairShort = currencyPairs.FirstOrDefault(x => x.Pair == scaner.TickerShort && x.Exchange.Name == exchangeShort.Name);// x.BaseCoin.Name == baseCoin.Name && x.QuoteCoin.Name == quoteCoin.Name && x.Exchange.Name == exchangeShort.Name);
 
                 if (baseCoin is null || quoteCoin is null || exchangeLong is null || exchangeShort is null || currencyPairLong is null || currencyPairShort is null)
                     throw new ArgumentNullException("Не найден символ или биржa");

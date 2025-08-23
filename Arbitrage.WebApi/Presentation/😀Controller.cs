@@ -10,8 +10,8 @@ namespace Arbitrage.WebApi.Presentation
     {
         private readonly ILogger<AhahahaController> _logger = logger;
 
-        [HttpPost("proxy-huyoksi")]
-        public async Task<IActionResult> Proxy([FromQuery] string url)
+        [HttpGet("proxy-huyoksi")]
+        public async Task<IActionResult> Proxy(string url)
         {
             if (string.IsNullOrEmpty(url))
                 return BadRequest(new ApiResponce() { RetMsg = "Не указан URL" });
