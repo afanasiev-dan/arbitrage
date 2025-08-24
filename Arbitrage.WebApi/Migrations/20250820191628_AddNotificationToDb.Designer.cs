@@ -3,6 +3,7 @@ using System;
 using Arbitrage.WebApi.Infastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,47 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Arbitrage.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250820191628_AddNotificationToDb")]
+    partial class AddNotificationToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
-
-            modelBuilder.Entity("Arbitrage.Domain.TelegramBot.Entities.TelegramUserSettings", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ChatId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CreatedAt")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("StateData")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UpdateAt")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TelegramUserSettings");
-                });
 
             modelBuilder.Entity("Arbitrage.Exchange.Domain.Entities.ExchangeModel", b =>
                 {
@@ -176,12 +144,6 @@ namespace Arbitrage.WebApi.Migrations
                     b.Property<Guid>("QuoteCoinId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("TickerLongId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("TickerShortId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BaseCoinId");
@@ -191,10 +153,6 @@ namespace Arbitrage.WebApi.Migrations
                     b.HasIndex("ExchangeIdShort");
 
                     b.HasIndex("QuoteCoinId");
-
-                    b.HasIndex("TickerLongId");
-
-                    b.HasIndex("TickerShortId");
 
                     b.ToTable("ScanerData");
                 });
@@ -276,7 +234,7 @@ namespace Arbitrage.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("TelegramUserSettingsId")
+                    b.Property<string>("TelegramId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
@@ -284,8 +242,6 @@ namespace Arbitrage.WebApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TelegramUserSettingsId");
 
                     b.ToTable("Users");
                 });
@@ -335,18 +291,6 @@ namespace Arbitrage.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Arbitrage.Symbols.Domain.Entities.CurrencyPair", "TickerLong")
-                        .WithMany()
-                        .HasForeignKey("TickerLongId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Arbitrage.Symbols.Domain.Entities.CurrencyPair", "TickerShort")
-                        .WithMany()
-                        .HasForeignKey("TickerShortId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("BaseCoin");
 
                     b.Navigation("ExchangeLong");
@@ -354,10 +298,6 @@ namespace Arbitrage.WebApi.Migrations
                     b.Navigation("ExchangeShort");
 
                     b.Navigation("QuoteCoin");
-
-                    b.Navigation("TickerLong");
-
-                    b.Navigation("TickerShort");
                 });
 
             modelBuilder.Entity("Arbitrage.Symbols.Domain.Entities.CurrencyPair", b =>
@@ -385,15 +325,6 @@ namespace Arbitrage.WebApi.Migrations
                     b.Navigation("Exchange");
 
                     b.Navigation("QuoteCoin");
-                });
-
-            modelBuilder.Entity("Arbitrage.User.Domain.Entities.UserModel", b =>
-                {
-                    b.HasOne("Arbitrage.Domain.TelegramBot.Entities.TelegramUserSettings", "TelegramUserSettings")
-                        .WithMany()
-                        .HasForeignKey("TelegramUserSettingsId");
-
-                    b.Navigation("TelegramUserSettings");
                 });
 #pragma warning restore 612, 618
         }

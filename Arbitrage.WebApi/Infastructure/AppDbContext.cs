@@ -5,6 +5,9 @@ using Arbitrage.Graph.Domain;
 using Arbitrage.Symbols.Domain.Entities;
 using Arbitrage.Exchange.Domain.Entities;
 using Arbitrage.Scaner.Domain.Entities;
+using Arbitrage.User.Domain.Entities;
+using Arbitrage.Notification.Domain.Entities;
+using Arbitrage.Domain.TelegramBot.Entities;
 
 namespace Arbitrage.WebApi.Infastructure;
 
@@ -15,9 +18,14 @@ public class AppDbContext : DbContext
     public DbSet<CurrencyPair> CurrencyPairs { get; set; }
     public DbSet<ExchangeModel> Exchanges { get; set; }
     public DbSet<ScanerModel> ScanerData { get; set; }
+    public DbSet<UserModel> Users { get; set; }
+    public DbSet<NotificationModel> Notifications { get; set; }
+    public DbSet<TelegramUserSettings>  TelegramUserSettings { get; set; }
 
-
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+        System.Console.WriteLine($"Я бдшка {DateTime.Now}");
+     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -64,7 +72,6 @@ public class AppDbContext : DbContext
             .HasOne(e => e.ExchangeShort)
             .WithMany()
             .HasForeignKey(s => s.ExchangeIdShort);
-
 
         // modelBuilder.Entity<CurrencyPair>()
         //     .HasOne(cp => cp.BaseCoin)

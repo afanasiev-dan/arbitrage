@@ -27,6 +27,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbitrage.Scaner", "Arbitra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSocketService", "DataSocketService\DataSocketService.csproj", "{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbitrage.Notification", "Arbitrage.Notification\Arbitrage.Notification.csproj", "{078FEC1E-85A4-4909-9D10-6C8BE24BACF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbitrage.User", "Arbitrage.User\Arbitrage.User.csproj", "{65842CCB-0384-4608-896F-D5A19A548CD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,12 +167,6 @@ Global
 		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Debug|x64.Build.0 = Debug|Any CPU
 		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Debug|x86.Build.0 = Debug|Any CPU
-		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|x64.ActiveCfg = Release|Any CPU
-		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|x64.Build.0 = Release|Any CPU
-		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|x86.ActiveCfg = Release|Any CPU
-		{F4C4844A-24F2-4A59-9EC4-AC52AF5474C9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

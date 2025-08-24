@@ -25,6 +25,8 @@
       <ProjectReference Include="..\Arbitrage.Symbols\Arbitrage.Symbols.csproj" />
       <ProjectReference Include="..\Arbitrage.Domain\Arbitrage.Domain.csproj" />
       <ProjectReference Include="..\Arbitrage.Scaner\Arbitrage.Scaner.csproj" />
+      <ProjectReference Include="..\Arbitrage.Notification\Arbitrage.Notification.csproj" />
+      <ProjectReference Include="..\Arbitrage.User\Arbitrage.User.csproj" />
     </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ using System;
 using Arbitrage.WebApi.Infastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Arbitrage.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250822133632_ChangedTelegramSettings")]
+    partial class ChangedTelegramSettings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.8");
@@ -176,12 +179,6 @@ namespace Arbitrage.WebApi.Migrations
                     b.Property<Guid>("QuoteCoinId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("TickerLongId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("TickerShortId")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BaseCoinId");
@@ -191,10 +188,6 @@ namespace Arbitrage.WebApi.Migrations
                     b.HasIndex("ExchangeIdShort");
 
                     b.HasIndex("QuoteCoinId");
-
-                    b.HasIndex("TickerLongId");
-
-                    b.HasIndex("TickerShortId");
 
                     b.ToTable("ScanerData");
                 });
@@ -335,18 +328,6 @@ namespace Arbitrage.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Arbitrage.Symbols.Domain.Entities.CurrencyPair", "TickerLong")
-                        .WithMany()
-                        .HasForeignKey("TickerLongId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Arbitrage.Symbols.Domain.Entities.CurrencyPair", "TickerShort")
-                        .WithMany()
-                        .HasForeignKey("TickerShortId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("BaseCoin");
 
                     b.Navigation("ExchangeLong");
@@ -354,10 +335,6 @@ namespace Arbitrage.WebApi.Migrations
                     b.Navigation("ExchangeShort");
 
                     b.Navigation("QuoteCoin");
-
-                    b.Navigation("TickerLong");
-
-                    b.Navigation("TickerShort");
                 });
 
             modelBuilder.Entity("Arbitrage.Symbols.Domain.Entities.CurrencyPair", b =>
