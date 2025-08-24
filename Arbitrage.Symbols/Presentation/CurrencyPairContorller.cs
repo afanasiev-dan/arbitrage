@@ -63,9 +63,9 @@ namespace Arbitrage.Symbols.Presentation
             {
                 await _currencyPairService.UpdateCurrencyPairsAsync(currencyPairs);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return NotFound(new ApiResponce() { RetMsg = "Пара не найдена" });
+                return NotFound(new ApiResponce() { RetMsg = ex.Message });
             }
 
             return Ok(new ApiResponce());
