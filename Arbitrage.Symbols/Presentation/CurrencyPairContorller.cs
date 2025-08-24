@@ -53,5 +53,23 @@ namespace Arbitrage.Symbols.Presentation
             return Ok(new ApiResponce() { Result = responce });
         }
 
+        [HttpPost("currency-pairs")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateCurrencyPairs(IEnumerable<CurrencyPairRequestDto> currencyPairs)
+        {
+            try
+            {
+                await _currencyPairService.UpdateCurrencyPairsAsync(currencyPairs);
+            }
+            catch (Exception)
+            {
+                return NotFound(new ApiResponce() { RetMsg = "Пара не найдена" });
+            }
+
+            return Ok(new ApiResponce());
+        }
+
     }
 }
