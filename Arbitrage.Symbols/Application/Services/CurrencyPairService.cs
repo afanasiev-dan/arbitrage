@@ -75,7 +75,7 @@ namespace Arbitrage.Symbols.Application.Services
                 var exchange = await _exchangeRepository.GetByNameAsync(pairDto.ExchangeName);
                 if (exchange is null) throw new ArgumentNullException("Биржа не найдена");
 
-                var symbolPair = await _currencyPairRepository.GetBySymbolAndExchangeAsync(coinFirst.FirstOrDefault()!.Id, coinSecond.FirstOrDefault()!.Id, exchange.Id, pairDto.MarketType);
+                var symbolPair = await _currencyPairRepository.GetByPairAndExchangeAsync(pairDto.Pair, exchange.Id, pairDto.MarketType);
                 if (symbolPair is null) throw new ArgumentNullException("Пара не найдена");
 
                 var currencyPair = new CurrencyPair()
