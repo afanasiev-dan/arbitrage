@@ -30,7 +30,7 @@ namespace DataSocketService
                 new(() => new ByBitSocket())},
 
             {$"{Arbitrage.ExchangeDomain.Exchanges.KuCoin}-{MarketType.Spot}", 
-                new(() => new KuCoinSocket())},
+                new(() => new KuCoinSocket(), wsCap:30)},
             {$"{Arbitrage.ExchangeDomain.Exchanges.KuCoin}-{MarketType.Futures}", 
                 new(() => new KuCoinSocket())},
 
@@ -42,7 +42,7 @@ namespace DataSocketService
             {$"{Arbitrage.ExchangeDomain.Exchanges.Htx}-{MarketType.Spot}", 
                 new(() => new HTXSocket(), checkConnectByPing:false, timerWaitPong:20) },
             {$"{Arbitrage.ExchangeDomain.Exchanges.Htx}-{MarketType.Futures}", 
-                new(() => new HTXSocket(), checkConnectByPing:false, timerWaitPong:20) },
+                new(() => new HTXSocket(), checkConnectByPing:false, timerWaitPong:20, wsCap:10) },
 
             {$"{Arbitrage.ExchangeDomain.Exchanges.LBank}-{MarketType.Spot}", 
                 new(() => new LBankSocket(), wsCap:50)},

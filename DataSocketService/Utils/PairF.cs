@@ -17,11 +17,20 @@ public static class PairF
         if (apiResponse?.Result is JArray jArray)
         {
             var lst = jArray.ToObject<List<CurrencyPairResponceDto>>();
-            lst = lst.Where(x => x.BaseCoin == "XMR" &&
-            !(x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.LBank && x.MarketType == MarketType.Futures) &&
-            !(x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Mexc && x.MarketType == MarketType.Spot) &&
-            !(x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Binance)
+            lst = lst.Where(x =>
+            x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Gate
+            || (x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Mexc && x.MarketType == MarketType.Futures)
+            || x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.ByBit
+            || x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.KuCoin
+            || (x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.LBank && x.MarketType == MarketType.Spot)
+            || x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Htx
             ).ToList();
+
+            //lst = lst.Where(x => x.BaseCoin == "XMR" &&
+            //!(x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.LBank && x.MarketType == MarketType.Futures) &&
+            //!(x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Mexc && x.MarketType == MarketType.Spot) &&
+            //!(x.ExchangeName == Arbitrage.ExchangeDomain.Exchanges.Binance)
+            //).ToList();
             return lst;
         }
         return null;

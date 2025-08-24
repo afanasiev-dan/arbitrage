@@ -15,14 +15,16 @@ public class Program
     public static async Task Main(string[] args)
     {
         var currencyPair = await PairF.GetCurrency();
+        //убрать монеты не имеющий пар
 
         await CreateConnect(currencyPair);
 
         var currencyPairBook = Exchanges.SelectMany(x => x.GetAllBooks()).ToList();
         ArbitragePair = PairF.GetArbitrage(currencyPairBook);
-        Console.WriteLine($"create {ArbitragePair.Count} Arb.pair");
+        Console.WriteLine($"Создано {ArbitragePair.Count} Арб.пар из {currencyPair.Count} Торг.пар");
 
         await StartListen();
+        Console.WriteLine("start");
         _ = Task.Run(SendInfo);
 
         Console.ReadKey();
@@ -63,6 +65,13 @@ public class Program
             List<ScanerAddDataRequestDto> result = new();
             foreach(var item in ArbitragePair)
             {
+                var longPrice = item.LongPair.Book.Ask;
+                var shortPrice = item.ShortPair.Book.Bid;
+                if (longPrice == -1 || shortPrice == -1)
+                    continue;
+                if (longPrice == 0 || shortPrice == 0)
+                    continue;
+
                 ScanerAddDataRequestDto line = new()
                 {
                     BaseCoinName = item.LongPair.Info.BaseCoin,
@@ -73,12 +82,12 @@ public class Program
                     MarketTypeShort = item.ShortPair.Info.MarketType,
                     FundingRateLong = 0,
                     FundingRateShort = 0,
-                    PurchasePriceLong = item.LongPair.Book.Ask,
-                    PurchasePriceShort = item.LongPair.Book.Bid,
+                    PurchasePriceLong = longPrice,
+                    PurchasePriceShort = shortPrice,
                     TickerLong = item.LongPair.Info.Ticker,
                     TickerShort = item.ShortPair.Info.Ticker,
                 };
-                string json = JsonConvert.SerializeObject(line);
+                //string json = JsonConvert.SerializeObject(line);
                 result.Add(line);
             }
 

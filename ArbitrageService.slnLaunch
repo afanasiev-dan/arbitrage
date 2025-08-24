@@ -4,7 +4,7 @@
     "Projects": [
       {
         "Path": "Arbitrage.WebApi\\Arbitrage.WebApi.csproj",
-        "Action": "Start"
+        "Action": "StartWithoutDebugging"
       },
       {
         "Path": "DataSocketService\\DataSocketService.csproj",
