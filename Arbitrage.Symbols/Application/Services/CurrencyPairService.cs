@@ -78,17 +78,19 @@ namespace Arbitrage.Symbols.Application.Services
                 var symbolPair = await _currencyPairRepository.GetByPairAndExchangeAsync(pairDto.Pair, exchange.Id, pairDto.MarketType);
                 if (symbolPair is null) throw new ArgumentNullException("Пара не найдена");
 
-                var currencyPair = new CurrencyPair()
-                {
-                    Pair = pairDto.Pair,
-                    BaseCoinId = coinFirst.FirstOrDefault()!.Id,
-                    QuoteCoinId = coinSecond.FirstOrDefault()!.Id,
-                    ExchangeId = exchange.Id,
-                    MarketType = pairDto.MarketType,
-                    exchangeType = pairDto.exchangeType
-                };
+                symbolPair.Pair = pairDto.Pair;
 
-                currencyPairForAdd.Add(currencyPair);
+                // var currencyPair = new CurrencyPair()
+                // {
+                //     Pair = pairDto.Pair,
+                //     BaseCoinId = coinFirst.FirstOrDefault()!.Id,
+                //     QuoteCoinId = coinSecond.FirstOrDefault()!.Id,
+                //     ExchangeId = exchange.Id,
+                //     MarketType = pairDto.MarketType,
+                //     exchangeType = pairDto.exchangeType
+                // };
+
+                currencyPairForAdd.Add(symbolPair);
             }
 
             await _currencyPairRepository.UpdateAsync(currencyPairForAdd);
