@@ -58,6 +58,20 @@ namespace Arbitrage.Symbols.Infastructure.Repositories
             return await query.FirstOrDefaultAsync();
         }
 
+        public async Task<CurrencyPair?> GetByPairAndExchangeAsync(string pair, Guid exchangeId, MarketType? marketType)
+        {
+            var query = _context.Set<CurrencyPair>()
+                .Include(c => c.BaseCoin)
+                .Include(c => c.QuoteCoin)
+                .Include(c => c.Exchange)
+                .Where(c => c.Pair == pair
+                     && c.ExchangeId == exchangeId);
+
+            if (marketType != null)
+                query = query.Where(c => c.MarketType == marketType);
+
+            return await query.FirstOrDefaultAsync();
+        }
         public async Task<CurrencyPair?> GetBySymbolAsync(Guid baseSymbolId, Guid quoteSymbolId)
         {
             return await _context.Set<CurrencyPair>()
