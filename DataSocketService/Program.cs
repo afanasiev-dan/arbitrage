@@ -69,8 +69,6 @@ public class Program
                 var shortPrice = item.ShortPair.Book.Bid;
                 if (longPrice == -1 || shortPrice == -1)
                     continue;
-                if (longPrice == 0 || shortPrice == 0)
-                    continue;
 
                 ScanerAddDataRequestDto line = new()
                 {

@@ -62,38 +62,37 @@ namespace Arbitrage.Symbols.Application.Services
 
         public async Task UpdateCurrencyPairsAsync(IEnumerable<CurrencyPairRequestDto> currencyPairs)
         {
-            IList<CurrencyPair> currencyPairForAdd = [];
+            IList<CurrencyPair> currencyPairForUpdate = [];
 
             foreach (var pairDto in currencyPairs)
             {
                 var coinFirst = await _coinRepository.GetByTickerAsync([pairDto.BaseCoinName]);
-                if (coinFirst is null) throw new ArgumentNullException("Монета не найдена");
+                if (coinFirst is null || !coinFirst.Any())
+                    throw new ArgumentNullException("Монета не найдена: " + pairDto.BaseCoinName);
 
                 var coinSecond = await _coinRepository.GetByTickerAsync([pairDto.QuoteCoinName]);
-                if (coinSecond is null) throw new ArgumentNullException("Монета не найдена");
+                if (coinSecond is null || !coinSecond.Any())
+                    throw new ArgumentNullException("Монета не найдена: " + pairDto.QuoteCoinName);
 
                 var exchange = await _exchangeRepository.GetByNameAsync(pairDto.ExchangeName);
-                if (exchange is null) throw new ArgumentNullException("Биржа не найдена");
+                if (exchange is null)
+                    throw new ArgumentNullException("Биржа не найдена: " + pairDto.ExchangeName);
 
                 var symbolPair = await _currencyPairRepository.GetByPairAndExchangeAsync(pairDto.Pair, exchange.Id, pairDto.MarketType);
-                if (symbolPair is null) throw new ArgumentNullException("Пара не найдена");
+                if (symbolPair is null)
+                    throw new ArgumentNullException("Пара не найдена: " + pairDto.Pair);
 
                 symbolPair.Pair = pairDto.Pair;
+                symbolPair.BaseCoinId = coinFirst.First().Id;
+                symbolPair.QuoteCoinId = coinSecond.First().Id;
+                symbolPair.ExchangeId = exchange.Id;
+                symbolPair.MarketType = pairDto.MarketType;
+                symbolPair.exchangeType = pairDto.exchangeType;
 
-                // var currencyPair = new CurrencyPair()
-                // {
-                //     Pair = pairDto.Pair,
-                //     BaseCoinId = coinFirst.FirstOrDefault()!.Id,
-                //     QuoteCoinId = coinSecond.FirstOrDefault()!.Id,
-                //     ExchangeId = exchange.Id,
-                //     MarketType = pairDto.MarketType,
-                //     exchangeType = pairDto.exchangeType
-                // };
-
-                currencyPairForAdd.Add(symbolPair);
+                currencyPairForUpdate.Add(symbolPair);
             }
 
-            await _currencyPairRepository.UpdateAsync(currencyPairForAdd);
+            await _currencyPairRepository.UpdateAsync(currencyPairForUpdate);
         }
     }
 }
