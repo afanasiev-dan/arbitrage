@@ -119,6 +119,9 @@ namespace Arbitrage.WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("BaseCoinId")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("Close")
                         .HasColumnType("TEXT");
 
@@ -150,11 +153,18 @@ namespace Arbitrage.WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("QuoteCoinId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("BaseCoinId");
 
                     b.HasIndex("ExchangeLongId");
 
                     b.HasIndex("ExchangeShortId");
+
+                    b.HasIndex("QuoteCoinId");
 
                     b.ToTable("ArbitrageCandle");
                 });
@@ -357,6 +367,12 @@ namespace Arbitrage.WebApi.Migrations
 
             modelBuilder.Entity("Arbitrage.Graph.Domain.Entities.ArbitrageCandle", b =>
                 {
+                    b.HasOne("Arbitrage.Symbols.Domain.Entities.Coin", "BaseCoin")
+                        .WithMany()
+                        .HasForeignKey("BaseCoinId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Arbitrage.Exchange.Domain.Entities.ExchangeModel", "ExchangeLong")
                         .WithMany()
                         .HasForeignKey("ExchangeLongId")
@@ -369,9 +385,19 @@ namespace Arbitrage.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Arbitrage.Symbols.Domain.Entities.Coin", "QuoteCoin")
+                        .WithMany()
+                        .HasForeignKey("QuoteCoinId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BaseCoin");
+
                     b.Navigation("ExchangeLong");
 
                     b.Navigation("ExchangeShort");
+
+                    b.Navigation("QuoteCoin");
                 });
 
             modelBuilder.Entity("Arbitrage.Scaner.Domain.Entities.ScanerModel", b =>

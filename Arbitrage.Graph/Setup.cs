@@ -1,5 +1,4 @@
-﻿using Arbitrage.Graph.Application;
-using Arbitrage.Graph.Application.Contracts;
+﻿using Arbitrage.Graph.Application.Contracts;
 using Arbitrage.Graph.Application.Services;
 using Arbitrage.Graph.Domain;
 using Arbitrage.Graph.Infastructure;

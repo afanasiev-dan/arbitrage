@@ -14,7 +14,7 @@ public partial class CandleService : ICandleService
     private readonly IExchangeApiClientFactory _strategyFactory;
     private readonly ICandleRepository _repository;
     private readonly IExchangeRepository _exchangeRepository;
-    private readonly ICoinRepository _symbolRepository;
+    private readonly ICoinRepository _coinsRepository;
     private int MaxCandlesPerRequest = 100;
 
     public CandleService(
@@ -26,7 +26,7 @@ public partial class CandleService : ICandleService
         _strategyFactory = strategyFactory;
         _repository = repository;
         _exchangeRepository = exchangeRepository;
-        _symbolRepository = symbolRepository;
+        _coinsRepository = symbolRepository;
     }
 
     public async Task<SpotCandlesResponceDto> GetCandles(string exchangeName, string symbolName, DateTime dateFrom, DateTime dateTo, MarketType marketType)
@@ -116,15 +116,15 @@ public partial class CandleService : ICandleService
     private async Task<List<Candle>> GetCandlesFromDbOrApi(string exchangeName, string symbolName, DateTime dateFrom, DateTime dateTo, MarketType marketType)
     {
         var exchanges = await _exchangeRepository.GetAllAsync();
-        var symbols = await _symbolRepository.GetAllAsync();
+        var coins = await _coinsRepository.GetAllAsync();
 
         if (exchanges is null || !exchanges.Any())
             throw new ArgumentNullException("Не найдена биржa");
 
-        if (symbols is null || !symbols.Any())
+        if (coins is null || !coins.Any())
             throw new ArgumentNullException("Не найден символ");
 
-        var symbol = symbols.FirstOrDefault(s => s.Name == symbolName);
+        var symbol = coins.FirstOrDefault(s => s.Name == symbolName);
         var exchange = exchanges.FirstOrDefault(e => e.Name == exchangeName);
 
         if (symbol is null || exchange is null)
