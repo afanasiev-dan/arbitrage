@@ -113,6 +113,52 @@ namespace Arbitrage.WebApi.Migrations
                     b.ToTable("Candles");
                 });
 
+            modelBuilder.Entity("Arbitrage.Graph.Domain.Entities.ArbitrageCandle", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Close")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ExchangeLongId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ExchangeShortId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("High")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Interval")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Low")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MarketTypeLong")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MarketTypeShort")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Open")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("OpenTime")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExchangeLongId");
+
+                    b.HasIndex("ExchangeShortId");
+
+                    b.ToTable("ArbitrageCandle");
+                });
+
             modelBuilder.Entity("Arbitrage.Notification.Domain.Entities.NotificationModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -307,6 +353,25 @@ namespace Arbitrage.WebApi.Migrations
                     b.Navigation("Exchange");
 
                     b.Navigation("Pair");
+                });
+
+            modelBuilder.Entity("Arbitrage.Graph.Domain.Entities.ArbitrageCandle", b =>
+                {
+                    b.HasOne("Arbitrage.Exchange.Domain.Entities.ExchangeModel", "ExchangeLong")
+                        .WithMany()
+                        .HasForeignKey("ExchangeLongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Arbitrage.Exchange.Domain.Entities.ExchangeModel", "ExchangeShort")
+                        .WithMany()
+                        .HasForeignKey("ExchangeShortId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExchangeLong");
+
+                    b.Navigation("ExchangeShort");
                 });
 
             modelBuilder.Entity("Arbitrage.Scaner.Domain.Entities.ScanerModel", b =>

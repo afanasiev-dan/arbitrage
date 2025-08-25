@@ -55,9 +55,25 @@ namespace Arbitrage.Symbols.Application.Services
             return await _currencyPairRepository.GetAllAsync();
         }
 
-        public async Task<IEnumerable<CurrencyPair>> GetCurrencyPairsAsync(IEnumerable<string> currencyPairs)
+        public async Task<IEnumerable<CurrencyPair>> GetCurrencyPairsAsync(IEnumerable<GetCurrencyPairDto> currencyPairs)
         {
-            throw new NotImplementedException();
+            List<CurrencyPair> result = [];
+
+            foreach (var pair in currencyPairs)
+            {
+                var coinFirst = await _coinRepository.GetByTickerAsync([pair.BaseCoinName]);
+                if (coinFirst is null) throw new ArgumentNullException("Монета не найдена");
+
+                var coinSecond = await _coinRepository.GetByTickerAsync([pair.QuoteCoinName]);
+                if (coinSecond is null) throw new ArgumentNullException("Монета не найдена");
+
+                var symbolPair = await _currencyPairRepository.GetBySymbolAsync(coinFirst.FirstOrDefault()!.Id, coinSecond.FirstOrDefault()!.Id);
+                if (symbolPair is null) throw new ArgumentNullException("Пара не найдена");
+
+                result.Add(symbolPair);
+            }
+
+            return result;
         }
 
         public async Task UpdateCurrencyPairsAsync(IEnumerable<CurrencyPairRequestDto> currencyPairs)
@@ -83,8 +99,10 @@ namespace Arbitrage.Symbols.Application.Services
                     throw new ArgumentNullException("Пара не найдена: " + pairDto.Pair);
 
                 symbolPair.Pair = pairDto.Pair;
-                symbolPair.BaseCoinId = coinFirst.First().Id;
-                symbolPair.QuoteCoinId = coinSecond.First().Id;
+
+                symbolPair.BaseCoinId = coinFirst.FirstOrDefault()!.Id;
+                symbolPair.QuoteCoinId = coinSecond.FirstOrDefault()!.Id;
+
                 symbolPair.ExchangeId = exchange.Id;
                 symbolPair.MarketType = pairDto.MarketType;
                 symbolPair.exchangeType = pairDto.exchangeType;

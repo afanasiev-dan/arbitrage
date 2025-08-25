@@ -7,9 +7,9 @@ using Arbitrage.Graph.Infastructure.ExchangeApiClients;
 using Arbitrage.Graph.Presentation.Dto;
 using Arbitrage.Symbols.Domain.Contracts;
 
-namespace Arbitrage.Graph.Application;
+namespace Arbitrage.Graph.Application.Services;
 
-public class CandleService : ICandleService
+public partial class CandleService : ICandleService
 {
     private readonly IExchangeApiClientFactory _strategyFactory;
     private readonly ICandleRepository _repository;
