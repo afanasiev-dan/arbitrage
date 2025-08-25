@@ -26,8 +26,8 @@ public class AppDbContext : DbContext
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
-        System.Console.WriteLine($"Я бдшка {DateTime.Now}");
-     }
+        Console.WriteLine($"Я бдшка {DateTime.Now}");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -64,6 +64,27 @@ public class AppDbContext : DbContext
             .HasOne(e => e.ExchangeShort)
             .WithMany()
             .HasForeignKey(s => s.ExchangeIdShort);
+
+        modelBuilder.Entity<ArbitrageCandle>()
+            .HasOne(e => e.BaseCoin)
+            .WithMany()
+            .HasForeignKey(s => s.BaseCoinId);
+
+        modelBuilder.Entity<ArbitrageCandle>()
+            .HasOne(e => e.QuoteCoin)
+            .WithMany()
+            .HasForeignKey(s => s.QuoteCoinId);
+
+        modelBuilder.Entity<ArbitrageCandle>()
+            .HasOne(e => e.ExchangeLong)
+            .WithMany()
+            .HasForeignKey(s => s.ExchangeLongId);
+
+        modelBuilder.Entity<ArbitrageCandle>()
+            .HasOne(e => e.ExchangeShort)
+            .WithMany()
+            .HasForeignKey(s => s.ExchangeShortId);
+
 
         // modelBuilder.Entity<CurrencyPair>()
         //     .HasOne(cp => cp.BaseCoin)

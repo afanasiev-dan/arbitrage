@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Arbitrage.Exchange.Domain.Entities;
+using Arbitrage.Symbols.Domain.Entities;
 
 namespace Arbitrage.Graph.Domain.Entities
 {
@@ -42,6 +43,16 @@ namespace Arbitrage.Graph.Domain.Entities
         public decimal Close { get; set; }
 
         /// <summary>
+        /// Id монеты лонга
+        /// </summary>
+        public Guid BaseCoinId { get; set; }
+
+        /// <summary>
+        /// Id монеты шорта
+        /// </summary>
+        public Guid QuoteCoinId { get; set; }
+
+        /// <summary>
         /// Id биржи лонга
         /// </summary>
         public Guid ExchangeLongId { get; set; }
@@ -60,6 +71,16 @@ namespace Arbitrage.Graph.Domain.Entities
         /// Тип маркета шорта
         /// </summary>
         public string? MarketTypeShort { get; set; }
+
+        /// <summary>
+        /// Объект монеты
+        /// </summary>
+        public Coin BaseCoin { get; set; }
+
+        /// <summary>
+        /// Объект монеты
+        /// </summary>
+        public Coin QuoteCoin { get; set; }
 
         /// <summary>
         /// Объект биржи

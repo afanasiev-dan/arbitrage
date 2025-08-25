@@ -9,6 +9,8 @@ namespace Arbitrage.Graph.Presentation.Dto
         public decimal High { get; set; }
         public decimal Low { get; set; }
         public decimal Close { get; set; }
+        public string BaseCoinName { get; set; }
+        public string QuoteCoinName { get; set; } = "USDT";
         public string ExchangeLongName { get; set; } = string.Empty;
         public string? MarketTypeLong { get; set; }
         public string ExchangeShortName { get; set; } = string.Empty;

@@ -1,5 +1,5 @@
 using Arbitrage.Domain;
-using Arbitrage.Graph.Application.Services;
+using Arbitrage.Graph.Application.Contracts;
 using Arbitrage.Graph.Presentation.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +10,8 @@ namespace Arbitrage.Graph.Presentation;
 [Route("api/[controller]")]
 public class GraphController : ControllerBase
 {
-    private readonly CandleService _candlesService;
-    public GraphController(CandleService candlesService)
+    private readonly ICandleService _candlesService;
+    public GraphController(ICandleService candlesService)
     {
         _candlesService = candlesService;
     }
