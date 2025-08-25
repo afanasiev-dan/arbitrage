@@ -1,4 +1,6 @@
 ﻿using Arbitrage.Graph.Application;
+using Arbitrage.Graph.Application.Contracts;
+using Arbitrage.Graph.Application.Services;
 using Arbitrage.Graph.Domain;
 using Arbitrage.Graph.Infastructure;
 using Arbitrage.Graph.Infastructure.ExchangeApiClients;
@@ -18,7 +20,7 @@ public static class Setup
         this IServiceCollection services)
     {
         services.AddTransient<ICandleRepository, CandleRepository>();
-        services.AddScoped<CandleService>();
+        services.AddScoped<ICandleService, CandleService>();
 
         services.AddScoped<IExchangeApiClient, MexcApiClient>();
         services.AddScoped<IExchangeApiClient, GateApiClient>();

@@ -6,7 +6,7 @@ namespace Arbitrage.Symbols.Application.Contracts
     public interface ICurrencyPairService
     {
         Task<IEnumerable<CurrencyPair>> GetAllCurrencyPairsAsync();    
-        Task<IEnumerable<CurrencyPair>> GetCurrencyPairsAsync(IEnumerable<string> currencyPairs);    
+        Task<IEnumerable<CurrencyPair>> GetCurrencyPairsAsync(IEnumerable<GetCurrencyPairDto> currencyPairs);    
         Task AddCurrencyPairsAsync(IEnumerable<CurrencyPairRequestDto>currencyPairs);
         Task UpdateCurrencyPairsAsync(IEnumerable<CurrencyPairRequestDto> currencyPairs);
     }

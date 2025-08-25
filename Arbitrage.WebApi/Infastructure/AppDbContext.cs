@@ -8,12 +8,14 @@ using Arbitrage.Scaner.Domain.Entities;
 using Arbitrage.User.Domain.Entities;
 using Arbitrage.Notification.Domain.Entities;
 using Arbitrage.Domain.TelegramBot.Entities;
+using Arbitrage.Graph.Domain.Entities;
 
 namespace Arbitrage.WebApi.Infastructure;
 
 public class AppDbContext : DbContext
 {
     public DbSet<Candle> Candles { get; set; }
+    public DbSet<ArbitrageCandle> ArbitrageCandles { get; set; }
     public DbSet<Coin> Coins { get; set; }
     public DbSet<CurrencyPair> CurrencyPairs { get; set; }
     public DbSet<ExchangeModel> Exchanges { get; set; }
